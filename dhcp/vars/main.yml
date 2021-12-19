@@ -1,0 +1,15 @@
+---
+
+docker_image_name: "dhcp-server"
+docker_container_name: "dhcp-server"
+
+SUBNET: "192.168.255.0"
+NETMASK: "255.255.255.0"
+GATEWAY: "192.168.255.2"
+BRODCAST: "192.168.255.255"
+
+DNSSERVER: "8.8.8.8"
+
+NEXTSERVER: "192.168.255.16"
+
+WEBSERVER: "192.168.255.17"

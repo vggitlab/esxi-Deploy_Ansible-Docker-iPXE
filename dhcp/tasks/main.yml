@@ -1,0 +1,26 @@
+---
+
+   - name: Apply Template for DHCPD.CONF file
+     template:
+       src: templates/dhcpd.j2
+       dest: "./{{role_name}}/files/dhcpd.conf"
+
+   - name: Create DHCP server Dockerimage from Dockerfile
+     community.docker.docker_image:
+       name: "{{ docker_image_name }}"
+       build:
+         pull: yes
+         path: "{{role_name}}/files/"
+       state: present
+       source: build
+
+   - name: Deploy Docker container from image
+     community.docker.docker_container:
+        name: "{{ docker_container_name }}"
+        image: "{{ docker_image_name }}"
+        state: started
+        networks:
+          - name: "MACVLAN"
+            ipv4_address: 192.168.255.15
+        volumes:
+          - "./{{role_name}}/files/dhcpd.conf:/etc/dhcp/dhcpd.conf"
